@@ -4,4 +4,4 @@ Normal text
 
 > block quote
 
-<img src="screenshot.jpg" alt="testimg" width="200"/>
+<img src="/assets/images/screenshot.jpg" alt="testimg" width="200"/>
