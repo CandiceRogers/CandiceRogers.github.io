@@ -362,3 +362,239 @@ This enhancement demonstrates my ability to "design and evaluate computing solut
 
 The combination of reinforcement learning for strategic decision-making with A* pathfinding for tactical navigation represents a thoughtful application of computer science principles to create an AI system that is both effective and efficient – a significant improvement over the project's original implementation.
 
+# Databases: Creating Persistence and Player Engagement
+
+The third enhancement phase addressed a fundamental limitation of the original Treasure Hunt project: the complete absence of data persistence. By implementing an SQLite database system, I transformed the temporary, session-based experience into a persistent game environment that tracks player progress, enables competition through leaderboards, and creates a richer, more engaging user experience.
+
+## The Need for Data Persistence
+
+The original project functioned as a standalone demonstration with no capability to store information between sessions. Each execution reset all progress, limiting its utility as an actual game. This lack of persistence meant:
+
+1. No ability to track player performance over time
+2. No way to compare different players or strategies
+3. No capability to save or resume game states
+4. No persistent record of AI or player improvements
+
+Adding database functionality was essential to transform the educational demonstration into a legitimate game experience where players could track their progress, compete with others, and see their improvement over time.
+
+## Database Design and Implementation
+
+After evaluating several database options, I selected SQLite for this implementation. While my initial plan considered MongoDB based on prior experience, further analysis revealed that SQLite's lightweight, serverless architecture was better suited to the project's requirements:
+
+1. SQLite eliminated the need for separate database installation or configuration
+2. Its built-in Python support simplified integration
+3. The relational structure provided efficient query capabilities for player statistics
+4. The self-contained nature of SQLite databases improved portability
+
+The database implementation centered around the `DatabaseManager` class, which encapsulates all database interactions behind an intuitive interface:
+
+```python
+class DatabaseManager:
+    def __init__(self, db_file: str = "treasure_hunt.db"):
+        """
+        Initialize SQLite database
+        
+        Args:
+            db_file: Path to SQLite database file
+        """
+        self.db_file = db_file
+        self.conn = None
+        
+        try:
+            # Connect to SQLite database (will create it if it doesn't exist)
+            self.conn = sqlite3.connect(self.db_file)
+            # Enable foreign keys
+            self.conn.execute("PRAGMA foreign_keys = ON")
+            # For easier dictionary access to query results
+            self.conn.row_factory = sqlite3.Row
+            
+            # Create tables if they don't exist
+            self._create_tables()
+            
+            print(f"Successfully connected to SQLite database: {db_file}")
+        except sqlite3.Error as e:
+            print(f"Error connecting to SQLite database: {e}")
+            if self.conn:
+                self.conn.close()
+                self.conn = None
+```
+
+The database schema was carefully designed to support all required functionality while maintaining simplicity:
+
+1. **Players Table** - Stores player profiles and aggregate statistics:
+   ```sql
+   CREATE TABLE IF NOT EXISTS players (
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       username TEXT UNIQUE NOT NULL,
+       wins INTEGER DEFAULT 0,
+       losses INTEGER DEFAULT 0,
+       created_at TEXT NOT NULL,
+       last_login TEXT NOT NULL
+   )
+   ```
+
+2. **Games Table** - Tracks individual game sessions linked to player profiles:
+   ```sql
+   CREATE TABLE IF NOT EXISTS games (
+       id INTEGER PRIMARY KEY AUTOINCREMENT,
+       player_id INTEGER NOT NULL,
+       winner TEXT NOT NULL,
+       moves_count INTEGER NOT NULL,
+       game_duration REAL NOT NULL,
+       powerups_collected INTEGER NOT NULL,
+       maze_difficulty REAL DEFAULT 1.0,
+       timestamp TEXT NOT NULL,
+       FOREIGN KEY (player_id) REFERENCES players (id)
+   )
+   ```
+
+This two-table design creates a clean separation of concerns while enabling complex queries for statistical features through the foreign key relationship.
+
+## Game Integration and Features
+
+The database integration enabled several new features that enhanced the gaming experience:
+
+1. **Player Profiles** - Users can now create persistent identities that track their progress across sessions
+2. **Statistics Tracking** - Comprehensive metrics including win rates, average moves, game duration, and powerup usage
+3. **Leaderboards** - Competitive rankings based on win rates and total victories 
+4. **Session History** - Detailed records of previous games with performance metrics
+5. **Data-Driven UI Elements** - Status displays showing player progress and comparison to other players
+
+These features were implemented through methods in the `DatabaseManager` class:
+
+```python
+def get_player_stats(self, username: str) -> Optional[Dict]:
+    """
+    Get a player's statistics
+    
+    Args:
+        username: Player's username
+        
+    Returns:
+        Player stats or None if player doesn't exist
+    """
+    if not self.is_connected():
+        print("Database not connected")
+        return None
+        
+    try:
+        cursor = self.conn.cursor()
+        
+        # Get basic player info
+        cursor.execute("SELECT * FROM players WHERE username = ?", (username,))
+        player = cursor.fetchone()
+        
+        if not player:
+            return None
+            
+        # Convert to dictionary
+        player_dict = dict(player)
+        
+        # Get additional stats from games
+        cursor.execute(
+            "SELECT * FROM games WHERE player_id = ? ORDER BY timestamp DESC",
+            (player_dict['id'],)
+        )
+        games = cursor.fetchall()
+        
+        # Calculate additional statistics...
+        
+        return player_dict
+        
+    except sqlite3.Error as e:
+        print(f"Error getting player stats: {e}")
+        return None
+```
+
+The user interface was enhanced with screens for player login, statistics viewing, and leaderboard display, creating a cohesive experience that leverages the database functionality.
+
+## Implementation Challenges
+
+As primarily a front-end developer, implementing database functionality presented several challenges:
+
+1. Designing an appropriate schema that balanced simplicity with functionality
+2. Ensuring proper connection management across different application states
+3. Creating efficient queries for statistical aggregation
+4. Implementing graceful error handling for database operations
+
+These challenges required careful research and iteration. The final implementation handles connection failures gracefully, manages database resources efficiently, and provides a clean interface for the rest of the application to access persistent data.
+
+## Enhancement Outcomes
+
+The database implementation transforms the user experience in significant ways:
+
+1. It creates progression and achievement systems that increase engagement
+2. It enables social features through leaderboards and comparisons
+3. It provides valuable feedback to players about their performance
+4. It demonstrates professionally applicable database integration techniques
+
+The decision to use SQLite rather than the initially considered MongoDB highlights my ability to select appropriate technologies based on specific project requirements rather than defaulting to more complex solutions. This thoughtful technology selection process is essential in professional software development contexts where balancing functionality against implementation complexity is a key skill.
+
+By adding data persistence to the Treasure Hunt Game, I've completed its transformation from a simple algorithm demonstration to a fully-featured interactive application that demonstrates database integration, algorithmic sophistication, and thoughtful user experience design—a comprehensive showcase of modern software development capabilities.
+
+# Course Outcomes Achievement
+
+The Treasure Hunt Game enhancements demonstrate comprehensive achievement of the core computer science competencies outlined in the course outcomes. Each aspect of the project—from software design to algorithms to database implementation—provides concrete evidence of how these outcomes were met through practical application.
+
+## Collaborative Environments and Diverse Audiences
+
+The enhanced Treasure Hunt Game employs strategies for **building collaborative environments that enable diverse audiences** to engage with complex computer science concepts. The project achieves this through:
+
+- **Modular code architecture** that separates concerns (game logic, AI, database, UI), making it accessible for collaborative development
+- **Clear documentation and code organization** that allows different team members to understand and contribute to specific components
+- **A visual interface** that translates complex AI concepts into an intuitive gaming experience accessible to technical and non-technical users
+- **Multiple entry points** for engagement—from casual gameplay to examining AI decision processes—providing value for diverse audiences
+
+The application bridges technical implementation with user-friendly design, transforming what was initially an academic exercise into an accessible product that could support decision-making about AI implementation approaches through direct comparative experience.
+
+## Professional Communication
+
+Throughout the development process, I demonstrated the ability to **design, develop, and deliver professional-quality communications** about technical concepts:
+
+- The **code review** presented complex technical information in a clear, actionable format
+- The **visual design** of the game interface effectively communicates game mechanics and AI behavior
+- The **in-code documentation** provides technical explanations that are coherent and precise
+- The **project documentation** adapts technical information for different audience needs
+
+The project itself serves as a communication tool, translating abstract AI concepts into visual representations that make them comprehensible to broader audiences. This translation of technical concepts into accessible experiences demonstrates professional communication skills essential in the computer science field.
+
+## Algorithmic Principles and Computer Science Practices
+
+The hybrid AI architecture exemplifies the ability to **design and evaluate computing solutions using algorithmic principles and computer science practices** while managing implementation trade-offs:
+
+- The **integration of Q-learning with A* pathfinding** demonstrates sophisticated algorithm selection based on complementary strengths
+- The **data structure implementations** (priority queues for A*, neural network architecture for Q-learning, efficient maze representation) show understanding of appropriate structures for specific requirements
+- The **maze generation algorithm** implements recursive division with validation to ensure solvable puzzles
+- The **strategic decision system** balances exploration and exploitation through carefully designed reward functions
+
+Each algorithmic choice required evaluating trade-offs: computational efficiency versus decision quality, code complexity versus maintainability, flexibility versus performance. The final implementation represents thoughtful balance of these considerations to create a solution that exceeds the capabilities of any single approach.
+
+## Innovative Techniques in Computing Practice
+
+The project demonstrates the ability to **use well-founded and innovative techniques, skills, and tools in computing practices** to deliver practical value:
+
+- The **PyGame implementation** shows application of industry-standard game development techniques
+- The **SQLite database integration** demonstrates appropriate technology selection and implementation
+- The **AI architecture** combines traditional and machine learning approaches in an innovative hybrid system
+- The **procedural content generation** for mazes shows understanding of dynamic game element creation
+
+The technology selection process itself demonstrates professional judgment—choosing SQLite over MongoDB based on specific project requirements rather than defaulting to more complex solutions, and selecting PyGame as an appropriate framework for the visualization requirements. These decisions reflect understanding of how to match technologies to specific project needs.
+
+## Security Mindset
+
+The project development process incorporated a **security mindset that anticipates potential vulnerabilities** and ensures data protection:
+
+- The **database implementation** includes proper connection management, error handling, and parameter sanitization
+- **User input validation** prevents injection attacks and buffer overflows
+- **Graceful failure handling** ensures the application remains functional even when components fail
+- **Data storage practices** follow security best practices for local applications
+
+While security wasn't the primary focus of this project, fundamental security considerations were integrated throughout the development process. Input validation, error handling, and proper resource management demonstrate awareness of potential security issues and appropriate mitigation strategies.
+
+## Comprehensive Achievement
+
+Together, these implementations demonstrate comprehensive achievement of all course outcomes through a single, integrated project. The Treasure Hunt Game represents not just individual technical skills, but the ability to combine diverse computer science disciplines—software engineering, algorithm design, database management, and user experience design—into a cohesive application that delivers genuine value.
+
+The progression from a simple Q-learning demonstration to a fully featured game with sophisticated AI, persistent data storage, and an engaging user interface demonstrates the breadth and depth of computer science knowledge and skills developed throughout the course program. Each enhancement builds upon the others, creating a project that showcases the full spectrum of computer science competencies outlined in the course outcomes.
+
+![The final gameplay.](/assets/images/gameplay.gif)
