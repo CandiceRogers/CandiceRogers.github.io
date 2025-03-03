@@ -222,7 +222,7 @@ The original Treasure Hunt project existed solely as a Jupyter notebook using Te
 
 I made deliberate design choices to balance innovation with the project's educational roots. While completely rebuilding the application's infrastructure, I maintained a visual style that connected to the original project—preserving its simplistic, utilitarian aesthetic rather than creating a graphically unrelated game:
 
-![The refactored Treasure Hunt Game maze compared to original](/assets/comparison.png)
+![The refactored Treasure Hunt Game maze compared to original](/assets/images/comparison.png)
 
 This design approach ensured that the enhanced project demonstrated clear evolution rather than complete replacement. The user interface clearly shows the maze environment, player position, AI agent, and includes features like:
 
