@@ -249,4 +249,116 @@ This enhancement directly demonstrated my ability to "use well-founded and innov
 
 The enhanced application maintains the educational value of the original project while significantly expanding its utility and appeal. The implementation balances algorithmic complexity with user experience considerations, using industry-standard tools and frameworks including PyGame for the interface and numpy for efficient maze generation and manipulation.
 
-Most importantly, this enhancement created the foundation upon which all subsequent improvements would build—establishing the core architecture that would later support advanced algorithmic integration and database functionality. By reimagining the project's fundamental purpose and structure, I created a platform that could showcase multiple dimensions of software engineering expertise.
+Most importantly, this enhancement created the foundation upon which all subsequent improvements would build, establishing the core architecture that would later support advanced algorithmic integration and database functionality. By reimagining the project's fundamental purpose and structure, I created a platform that could showcase multiple dimensions of software engineering expertise.
+
+# Algorithms and Data Structures: Implementing a Hybrid AI Architecture
+
+The second enhancement phase focused on transforming the AI component of the Treasure Hunt Game. While the initial software engineering enhancement created an interactive game environment, the original Q-learning algorithm proved inadequate for navigating dynamically generated mazes. This required a fundamental reimagining of the AI architecture, combining reinforcement learning with traditional pathfinding algorithms to create a more capable and adaptive system.
+
+## Limitations of the Original AI Implementation
+
+The original project relied solely on deep Q-learning, which functions by learning patterns through repeated trial and error in a static environment. This approach presented significant limitations when applied to procedurally generated mazes:
+
+1. The Q-learning model struggled with generalization across different maze layouts
+2. It required extensive pre-training to perform adequately on each new maze configuration
+3. The model had no capacity to understand or utilize game elements like powerups
+4. It lacked the ability to perform real-time pathfinding in changing environments
+
+These limitations became immediately apparent when testing the original AI against randomly generated mazes. The agent often failed to find optimal paths or became trapped in cycles, highlighting the need for a more sophisticated approach.
+
+![An AI model trained only with deep Q-learning struggles with solving random mazes,](/assets/images/q_learning_random.gif)
+
+## The Hybrid Solution: Combining Q-Learning with A* Pathfinding
+
+To address these limitations, I implemented a hybrid architecture that combines Q-learning's strategic decision-making capabilities with the tactical efficiency of A* pathfinding. The A* algorithm, first developed in 1968 by Hart, Nilsson, and Raphael at Stanford Research Institute, provides optimal pathfinding through its use of a heuristic function that estimates remaining distance to the goal.
+
+The key innovation in this hybrid approach was separating strategic decision-making from tactical navigation:
+
+1. The Q-learning component handles high-level strategy decisions:
+   - Whether to pursue the treasure directly or collect powerups first
+   - When to use special abilities like wall-breaking
+   - How to adapt to changing maze conditions
+
+2. The A* algorithm handles detailed pathfinding:
+   - Calculating the optimal path to any chosen destination
+   - Efficiently navigating around obstacles
+   - Adapting to local changes in the environment
+
+This architecture is reflected in the `StrategicAI` class implementation, which manages both strategic decision-making and pathfinding coordination:
+
+```python
+def decide_action(self, state_tensor, maze, ai_pos, treasure_pos, powerups, valid_actions):
+    # Strategy selection using Q-learning (exploration vs exploitation)
+    strategy = self.select_strategy(state_tensor, valid_strategies)
+    
+    # Execute selected strategy (targeting treasure, powerup, etc.)
+    target_pos = self.determine_target(strategy, treasure_pos, powerups)
+    
+    # Use A* to get the next move
+    move = self.pathfinder.get_next_move(ai_pos, target_pos, maze, wall_break=self.wall_break_active)
+    
+    return strategy, move, powerup_action
+```
+
+## Data Structure Implementation
+
+The hybrid architecture required careful design of data structures to support both Q-learning and pathfinding components:
+
+1. For the A* pathfinder, I implemented:
+   - Priority queues using Python's `heapq` module to efficiently track frontier nodes
+   - Hash tables (dictionaries) to manage closed sets and path reconstruction
+   - Custom path representation for efficient navigation
+
+2. For the Q-learning component, I designed:
+   - A neural network with state representation optimized for strategic decision-making
+   - Feature vectors that capture essential game state information
+   - Memory replay buffers with prioritization based on experience value
+
+The state representation was particularly critical, requiring a balance between information density and computational efficiency:
+
+```python
+def get_state_features(self, maze, ai_pos, treasure_pos, powerups):
+    # Direct distance to treasure
+    direct_dist = self.pathfinder.manhattan_distance(ai_pos, treasure_pos)
+    norm_direct_dist = direct_dist / (2 * self.grid_size)
+    
+    # A* path length to treasure (with and without wall-break)
+    path_normal = self.pathfinder.get_path_length(maze, ai_pos, treasure_pos, False)
+    path_wallbreak = self.pathfinder.get_path_length(maze, ai_pos, treasure_pos, True)
+    
+    # Path advantage from using wall break
+    path_advantage = max(0, (norm_path_normal - norm_path_wallbreak))
+    
+    # Has wall break power
+    has_wallbreak = 1.0 if self.has_wall_break else 0.0
+    
+    # Additional features...
+    
+    return torch.FloatTensor(features)
+```
+
+## Training Process and Optimization
+
+Training this hybrid model presented unique challenges. Traditional reinforcement learning approaches needed adaptation to work effectively with the A* pathfinding component. The solution involved:
+
+1. Designing a reward function that balanced immediate navigation rewards with long-term strategic incentives
+2. Implementing curriculum learning that gradually increased maze complexity during training
+3. Creating specialized training environments that emphasized different aspects of decision-making
+
+The breakthrough in training came when I separated strategic decision-making from tactical navigation, allowing each component to specialize in its domain. This approach dramatically improved the AI's ability to navigate random mazes while making intelligent strategic choices about powerup collection and usage.
+
+![Training the new model architecture resulted in a phenomenal 97% Win Rate. Subsequent training upped this to 98%.](/assets/images/model_training.png)
+
+## Enhancement Outcomes
+
+The enhanced AI represents a significant advancement over the original implementation:
+
+1. The hybrid approach can solve any randomly generated maze without pre-training
+2. The AI can make strategic decisions about powerup collection and usage
+3. It adapts to dynamic environments including player movement
+4. It provides a genuinely challenging opponent for human players
+
+This enhancement demonstrates my ability to "design and evaluate computing solutions that solve a given problem using algorithmic principles and computer science practices and standards appropriate to its solution, while managing the trade-offs involved in design choices." The hybrid architecture shows a sophisticated understanding of when to apply different algorithmic approaches based on their specific strengths, creating a solution that exceeds the capabilities of either approach individually.
+
+The combination of reinforcement learning for strategic decision-making with A* pathfinding for tactical navigation represents a thoughtful application of computer science principles to create an AI system that is both effective and efficient – a significant improvement over the project's original implementation.
+
