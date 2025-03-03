@@ -201,4 +201,52 @@ def store_game_state(self, state_data):
     })
 ```
 
-This initial code review was essential for identifying the specific limitations of the original implementation and developing a structured enhancement plan. By carefully examining the existing codebase, I could target key areas for improvement that would transform the basic Q-learning demonstration into a fully-featured interactive game with sophisticated AI capabilities and data persistence. The code review process demonstrated my ability to analyze existing software, identify technical limitations, and develop strategic enhancement plans that address those limitations while expanding functionality. This analytical approach set the foundation for the successful enhancements documented in the subsequent sections of this portfolio.
+This initial code review was essential for identifying the specific limitations of the original implementation and developing a structured enhancement plan. By carefully examining the existing codebase I was able to target key areas for improvement that would transform the basic Q-learning demonstration into a fully-featured interactive game with more 
+sophisticated AI capabilities and data persistence. The code review process demonstrated my ability to analyze existing software, identify technical limitations, and develop strategic enhancement plans that address those limitations while expanding functionality. This analytical approach set the foundation for the successful enhancements documented in the subsequent sections of this portfolio.
+
+# Software Design and Engineering: Creating an Interactive Game Experience
+
+The first enhancement of the Treasure Hunt project focused on transforming a simple Q-learning algorithm training exercise into a fully interactive game experience. This fundamental redesign expanded the application's scope far beyond its original purpose as an educational demonstration, creating a foundation for all subsequent enhancements.
+
+## Transformation from Algorithm to Application
+
+The original Treasure Hunt project existed solely as a Jupyter notebook using TensorFlow and Keras to demonstrate Q-learning concepts. It had no interactive elements, no user interface, and functioned purely as a technical demonstration of machine learning principles. My enhancement created an entirely new application architecture around this core, implementing:
+
+- A complete game engine using the PyGame library
+- Interactive user controls and visual feedback systems
+- A significantly expanded maze environment beyond the original 8×8 grid
+- Random maze generation using recursive division algorithms
+- Player-versus-AI gameplay mechanics
+
+## Design Philosophy and Implementation
+
+I made deliberate design choices to balance innovation with the project's educational roots. While completely rebuilding the application's infrastructure, I maintained a visual style that connected to the original project—preserving its simplistic, utilitarian aesthetic rather than creating a graphically unrelated game:
+
+![The refactored Treasure Hunt Game maze compared to original](/assets/comparison.png)
+
+This design approach ensured that the enhanced project demonstrated clear evolution rather than complete replacement. The user interface clearly shows the maze environment, player position, AI agent, and includes features like:
+
+- Clear visual distinction between walls, paths, and objectives
+- Real-time visualization of both player and AI movement
+- Intuitive controls for navigation and power-up interaction
+- Status displays for game information and statistics
+
+## Technical Implementation
+
+The PyGame library provided the framework for this enhancement, allowing for efficient implementation of the graphical interface while maintaining Python as the core language. This implementation required:
+
+1. Designing a modular code architecture that separated game logic from display functions
+2. Creating responsive input handling for player controls
+3. Implementing collision detection and boundary enforcement
+4. Developing algorithms for procedural maze generation that guaranteed solvable puzzles
+5. Building transition systems between game states (main menu, gameplay, end screens)
+
+Working with PyGame expanded my technical capabilities, requiring me to learn new modules and techniques for rendering the maze, implementing recursive division for randomized layouts, and creating an intuitive user interface. This learning process deepened my understanding of game development principles while building on my existing programming knowledge.
+
+## Enhancement Outcomes
+
+This enhancement directly demonstrated my ability to "use well-founded and innovative techniques, skills, and tools in computing practices for the purpose of implementing computer solutions that deliver value." By transforming a technical demonstration into an interactive application, I showed how theoretical concepts can be made accessible and engaging through thoughtful design and implementation.
+
+The enhanced application maintains the educational value of the original project while significantly expanding its utility and appeal. The implementation balances algorithmic complexity with user experience considerations, using industry-standard tools and frameworks including PyGame for the interface and numpy for efficient maze generation and manipulation.
+
+Most importantly, this enhancement created the foundation upon which all subsequent improvements would build—establishing the core architecture that would later support advanced algorithmic integration and database functionality. By reimagining the project's fundamental purpose and structure, I created a platform that could showcase multiple dimensions of software engineering expertise.
