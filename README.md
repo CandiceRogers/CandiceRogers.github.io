@@ -26,7 +26,7 @@ The three artifacts in my portfolio collectively demonstrate my ability to devel
 
 Together, these artifacts tell the story of a developer who can envision complete applications, solve complex technical challenges, and deliver engaging user experiences. They represent not just isolated skills, but the integration of multiple disciplines into cohesive, functional software.
 
-As you explore the technical artifacts of the enhanced Treasure Hunt Game that follow, you'll see how each enhancement builds upon the others to create a project that demonstrates the full spectrum of my capabilities—from front-end interactivity to intelligent algorithms to data persistence. This portfolio stands as evidence of my readiness to tackle sophisticated software engineering challenges in the rapidly evolving field of AI application development.
+As you explore the technical artifacts of the enhanced Treasure Hunt Game that follow, you'll see how each enhancement builds upon the others to create a project that demonstrates the full spectrum of my capabilities, from front-end interactivity to intelligent algorithms to data persistence. This portfolio stands as evidence of my readiness to tackle sophisticated software engineering challenges in the rapidly evolving field of AI application development.
 
 # Code Review: Initial Assessment and Enhancement Planning
 
@@ -93,7 +93,7 @@ else:
     action = np.argmax(experience.predict(envstate))  # exploit
 ```
 
-The simple epsilon-greedy approach could be enhanced with more sophisticated exploration strategies like softmax action selection or uncertainty-based exploration. Additionally, the neural network structure was quite basic with very few layers, and wasn't optimized for spatial understanding — a crucial factor for effective maze navigation.
+The simple epsilon-greedy approach could be enhanced with more sophisticated exploration strategies like softmax action selection or uncertainty-based exploration. Additionally, the neural network structure was quite basic with very few layers, and wasn't optimized for spatial understanding, a crucial factor for effective maze navigation.
 
 ```python
 # Neural network architecture
@@ -220,7 +220,7 @@ The original Treasure Hunt project existed solely as a Jupyter notebook using Te
 
 ## Design Philosophy and Implementation
 
-I made deliberate design choices to balance innovation with the project's educational roots. While completely rebuilding the application's infrastructure, I maintained a visual style that connected to the original project—preserving its simplistic, utilitarian aesthetic rather than creating a graphically unrelated game:
+I made deliberate design choices to balance innovation with the project's educational roots. While completely rebuilding the application's infrastructure, I maintained a visual style that connected to the original project, preserving its simplistic, utilitarian aesthetic rather than creating a graphically unrelated game:
 
 ![The refactored Treasure Hunt Game maze compared to original](/assets/images/comparison.png)
 
@@ -530,11 +530,11 @@ The database implementation transforms the user experience in significant ways:
 
 The decision to use SQLite rather than the initially considered MongoDB highlights my ability to select appropriate technologies based on specific project requirements rather than defaulting to more complex solutions. This thoughtful technology selection process is essential in professional software development contexts where balancing functionality against implementation complexity is a key skill.
 
-By adding data persistence to the Treasure Hunt Game, I've completed its transformation from a simple algorithm demonstration to a fully-featured interactive application that demonstrates database integration, algorithmic sophistication, and thoughtful user experience design—a comprehensive showcase of modern software development capabilities.
+By adding data persistence to the Treasure Hunt Game, I've completed its transformation from a simple algorithm demonstration to a fully-featured interactive application that demonstrates database integration, algorithmic sophistication, and thoughtful user experience design, a comprehensive showcase of modern software development capabilities.
 
 # Course Outcomes Achievement
 
-The Treasure Hunt Game enhancements demonstrate comprehensive achievement of the core computer science competencies outlined in the course outcomes. Each aspect of the project—from software design to algorithms to database implementation—provides concrete evidence of how these outcomes were met through practical application.
+The Treasure Hunt Game enhancements demonstrate comprehensive achievement of the core computer science competencies outlined in the course outcomes. Each aspect of the project, from software design to algorithms to database implementation, provides concrete evidence of how these outcomes were met through practical application.
 
 ## Collaborative Environments and Diverse Audiences
 
@@ -543,7 +543,7 @@ The enhanced Treasure Hunt Game employs strategies for **building collaborative 
 - **Modular code architecture** that separates concerns (game logic, AI, database, UI), making it accessible for collaborative development
 - **Clear documentation and code organization** that allows different team members to understand and contribute to specific components
 - **A visual interface** that translates complex AI concepts into an intuitive gaming experience accessible to technical and non-technical users
-- **Multiple entry points** for engagement—from casual gameplay to examining AI decision processes—providing value for diverse audiences
+- **Multiple entry points** for engagement from casual gameplay to examining AI decision processes, providing value for diverse audiences
 
 The application bridges technical implementation with user-friendly design, transforming what was initially an academic exercise into an accessible product that could support decision-making about AI implementation approaches through direct comparative experience.
 
@@ -578,7 +578,7 @@ The project demonstrates the ability to **use well-founded and innovative techni
 - The **AI architecture** combines traditional and machine learning approaches in an innovative hybrid system
 - The **procedural content generation** for mazes shows understanding of dynamic game element creation
 
-The technology selection process itself demonstrates professional judgment—choosing SQLite over MongoDB based on specific project requirements rather than defaulting to more complex solutions, and selecting PyGame as an appropriate framework for the visualization requirements. These decisions reflect understanding of how to match technologies to specific project needs.
+The technology selection process itself demonstrates professional judgment, choosing SQLite over MongoDB based on specific project requirements rather than defaulting to more complex solutions, and selecting PyGame as an appropriate framework for the visualization requirements. These decisions reflect understanding of how to match technologies to specific project needs.
 
 ## Security Mindset
 
@@ -593,7 +593,7 @@ While security wasn't the primary focus of this project, fundamental security co
 
 ## Comprehensive Achievement
 
-Together, these implementations demonstrate comprehensive achievement of all course outcomes through a single, integrated project. The Treasure Hunt Game represents not just individual technical skills, but the ability to combine diverse computer science disciplines—software engineering, algorithm design, database management, and user experience design—into a cohesive application that delivers genuine value.
+Together, these implementations demonstrate comprehensive achievement of all course outcomes through a single, integrated project. The Treasure Hunt Game represents not just individual technical skills, but the ability to combine diverse computer science disciplines: software engineering, algorithm design, database management, and user experience design into a cohesive application that delivers genuine value.
 
 The progression from a simple Q-learning demonstration to a fully featured game with sophisticated AI, persistent data storage, and an engaging user interface demonstrates the breadth and depth of computer science knowledge and skills developed throughout the course program. Each enhancement builds upon the others, creating a project that showcases the full spectrum of computer science competencies outlined in the course outcomes.
 
