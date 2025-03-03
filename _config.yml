@@ -3,4 +3,4 @@ plugins:
 - jekyll-remote-theme # add this line to the plugins list if you already have one
 
 title: Candice Rogers
-description: A portfolio showcasing the SNHU CS-499 final project, Treasure Hunt Game, built with Python, Pygame, and reinforcement learning
+description: A portfolio showcasing my SNHU CS-499 final project, Treasure Hunt Game, built with Python, Pygame, and Reinforcement Learning
